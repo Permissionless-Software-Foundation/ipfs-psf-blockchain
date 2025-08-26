@@ -8,8 +8,11 @@ import sha256 from 'sha256'
 
 class BlockchainAdapter {
   constructor () {
+    // Holds the chain of blocks.
     this.chain = []
-    this.newTransactions = []
+
+    // Holds the new transactions that are being mined
+    this.mempool = []
 
     // Bind 'this' object to all methods
     this.createNewBlock = this.createNewBlock.bind(this)
@@ -26,14 +29,14 @@ class BlockchainAdapter {
     const newBlock = {
       height: this.chain.length + 1,
       timestamp: new Date().toISOString(),
-      transactions: this.newTransactions,
+      transactions: this.mempool,
       nonce,
       hash, // Hash of the newTransactions array.
       previousBlockHash
     }
 
     // Clear the new transactions array
-    this.newTransactions = []
+    this.mempool = []
 
     // Add the new block to the chain
     this.chain.push(newBlock)
@@ -59,7 +62,7 @@ class BlockchainAdapter {
       recipient
     }
 
-    this.newTransactions.push(newTransaction)
+    this.mempool.push(newTransaction)
 
     // Get the block height of the future block where this transaction should be included.
     return this.getLastBlock().height + 1

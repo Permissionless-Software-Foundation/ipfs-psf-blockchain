@@ -23,17 +23,17 @@ describe('BlockchainAdapter', () => {
   describe('#constructor', () => {
     it('should create a new instance of the Blockchain', () => {
       assert.property(uut, 'chain')
-      assert.property(uut, 'newTransactions')
+      assert.property(uut, 'mempool')
 
       assert.isArray(uut.chain)
-      assert.isArray(uut.newTransactions)
+      assert.isArray(uut.mempool)
     })
   })
 
   describe('#createNewBlock', () => {
     it('should create a new block', () => {
       // Add one transaction to the mempool.
-      uut.newTransactions.push('test')
+      uut.mempool.push('test')
 
       const result = uut.createNewBlock({
         nonce: 1,
@@ -50,7 +50,7 @@ describe('BlockchainAdapter', () => {
       assert.property(result, 'previousBlockHash')
 
       // Check that the new transactions array is empty.
-      assert.isEmpty(uut.newTransactions)
+      assert.isEmpty(uut.mempool)
 
       // Check that the new block was added to the chain.
       assert.equal(uut.chain.length, 1)
@@ -61,7 +61,7 @@ describe('BlockchainAdapter', () => {
   describe('#getLastBlock', () => {
     it('should return the last block in the chain', () => {
       // Create one block with one transaction.
-      uut.newTransactions.push('test')
+      uut.mempool.push('test')
       uut.createNewBlock({
         nonce: 1,
         previousBlockHash: 'fffaaa',
@@ -78,7 +78,7 @@ describe('BlockchainAdapter', () => {
   describe('#getLastBlockHash', () => {
     it('should return the hash of the last block in the chain', () => {
       // Create one block with one transaction.
-      uut.newTransactions.push('test')
+      uut.mempool.push('test')
       uut.createNewBlock({
         nonce: 1,
         previousBlockHash: 'fffaaa',
@@ -95,7 +95,7 @@ describe('BlockchainAdapter', () => {
   describe('#createNewTransaction', () => {
     it('should add a new transaction to the mempool', () => {
       // Create one block with one transaction.
-      uut.newTransactions.push('test')
+      uut.mempool.push('test')
       uut.createNewBlock({
         nonce: 1,
         previousBlockHash: 'fffaaa',
@@ -109,22 +109,22 @@ describe('BlockchainAdapter', () => {
         recipient: 'test'
       })
       // console.log('createNewTransaction() result: ', result)
-      // console.log('uut.newTransactions: ', uut.newTransactions)
+      // console.log('uut.mempool: ', uut.mempool)
 
       // The function should return the block height where the transaction will be added.
       assert.equal(result, 2)
 
       // newTransaction array should have a single transaction.
-      assert.equal(uut.newTransactions.length, 1)
+      assert.equal(uut.mempool.length, 1)
 
       // The transaction should have the expected properties.
-      assert.property(uut.newTransactions[0], 'amount')
-      assert.property(uut.newTransactions[0], 'sender')
-      assert.property(uut.newTransactions[0], 'recipient')
+      assert.property(uut.mempool[0], 'amount')
+      assert.property(uut.mempool[0], 'sender')
+      assert.property(uut.mempool[0], 'recipient')
 
       // The transaction should have the expected values.
-      assert.equal(uut.newTransactions[0].amount, 1)
-      assert.equal(uut.newTransactions[0].sender, 'test')
+      assert.equal(uut.mempool[0].amount, 1)
+      assert.equal(uut.mempool[0].sender, 'test')
     })
   })
 
