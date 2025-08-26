@@ -20,6 +20,10 @@ class BlockchainAdapter {
     this.getLastBlockHash = this.getLastBlockHash.bind(this)
     this.createNewTransaction = this.createNewTransaction.bind(this)
     this.hashBlock = this.hashBlock.bind(this)
+    this.createGenesisBlock = this.createGenesisBlock.bind(this)
+
+    // Create the genesis block.
+    this.createGenesisBlock()
   }
 
   createNewBlock (inObj = {}) {
@@ -57,12 +61,13 @@ class BlockchainAdapter {
   // Return the expected block height of the blockwhere the transaction will
   // be included.
   createNewTransaction (inObj = {}) {
-    const { amount, sender, recipient } = inObj
+    const { amount, sender, recipient, message } = inObj
 
     const newTransaction = {
       amount,
       sender,
-      recipient
+      recipient,
+      message
     }
 
     this.mempool.push(newTransaction)
@@ -93,6 +98,24 @@ class BlockchainAdapter {
       hash = this.hashBlock({ previousBlockHash, currentBlockData, nonce })
     }
     return nonce
+  }
+
+  // Create the first block in the blockchain.
+  createGenesisBlock () {
+    // Create a single transaction in the mempool.
+    const firstTx = {
+      amount: 0,
+      sender: 'genesis',
+      recipient: 'genesis',
+      message: 'This is the PSF blockchain. It is a simple time-stamp blockchain where transaction can contain a small text message.'
+    }
+    this.mempool.push(firstTx)
+
+    return this.createNewBlock({
+      nonce: 100,
+      previousBlockHash: '0',
+      hash: '0'
+    })
   }
 }
 

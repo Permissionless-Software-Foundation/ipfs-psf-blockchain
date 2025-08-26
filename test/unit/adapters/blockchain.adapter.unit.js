@@ -33,13 +33,27 @@ describe('BlockchainAdapter', () => {
   describe('#createNewBlock', () => {
     it('should create a new block', () => {
       // Add one transaction to the mempool.
-      uut.mempool.push('test')
+      // uut.mempool.push('test')
+      uut.createNewTransaction({
+        amount: 1,
+        sender: 'test',
+        recipient: 'test',
+        message: 'test'
+      })
+
+      const previousBlockHash = uut.getLastBlockHash()
+      const hash = uut.hashBlock({
+        previousBlockHash,
+        currentBlockData: uut.mempool,
+        nonce: 100
+      })
 
       const result = uut.createNewBlock({
-        nonce: 1,
-        previousBlockHash: 'fffaaa',
-        hash: 'fffaaa'
+        nonce: 100,
+        previousBlockHash,
+        hash
       })
+      // console.log('result: ', result)
 
       // Check that the new block was created with expected properties.
       assert.property(result, 'height')
@@ -53,8 +67,12 @@ describe('BlockchainAdapter', () => {
       assert.isEmpty(uut.mempool)
 
       // Check that the new block was added to the chain.
-      assert.equal(uut.chain.length, 1)
-      assert.deepEqual(uut.chain[0], result)
+      assert.equal(uut.chain.length, 2)
+
+      // Assert the block has expected values.
+      assert.equal(result.height, 2)
+      assert.equal(result.nonce, 100)
+      assert.equal(result.previousBlockHash, '0')
     })
   })
 
@@ -112,7 +130,7 @@ describe('BlockchainAdapter', () => {
       // console.log('uut.mempool: ', uut.mempool)
 
       // The function should return the block height where the transaction will be added.
-      assert.equal(result, 2)
+      assert.equal(result, 3)
 
       // newTransaction array should have a single transaction.
       assert.equal(uut.mempool.length, 1)
