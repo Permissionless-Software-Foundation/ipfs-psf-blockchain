@@ -1,0 +1,29 @@
+# Start the service with the command 'docker-compose up -d'
+
+version: '3.9'
+
+services:
+  ipfs-service:
+    build: .
+    #image: christroutner/ipfs-service-provider:v5.0.1
+    container_name: ipfs-service
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '10'
+    mem_limit: 1000mb
+    #links:
+    #  - mongo-ipfs-service
+    ports:
+      # <host port>:<container port>
+      - '5010:5010' # REST API
+      - '4001:4001' # TCP
+      - '4003:4003' # Websockets
+      - '4005:4005' # WebRTC
+
+    volumes:
+      - ../data/ipfsdata:/home/safeuser/ipfs-service-provider-leveldb/.ipfsdata
+      - ../data/leveldb:/home/safeuser/ipfs-service-provider-leveldb/leveldb-data
+      - ./start-production.sh:/home/safeuser/ipfs-service-provider-leveldb/start-production.sh
+    restart: always
