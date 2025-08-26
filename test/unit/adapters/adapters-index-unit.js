@@ -38,6 +38,7 @@ describe('#adapters', () => {
 
       assert.equal(result, true)
     })
+
     it('should not start ipfs on test enviroment', async () => {
       // Mock dependencies
       uut.config.getJwtAtStartup = true
@@ -47,6 +48,7 @@ describe('#adapters', () => {
       sandbox.stub(uut.fullStackJwt, 'getJWT').resolves()
       sandbox.stub(uut.fullStackJwt, 'instanceBchjs').resolves()
       const ipfsSpy = sandbox.stub(uut.ipfs, 'start').resolves(null)
+      sandbox.stub(uut.levelDb, 'openDbs').returns()
 
       const result = await uut.start()
 
