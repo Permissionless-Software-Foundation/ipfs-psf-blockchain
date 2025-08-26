@@ -3,6 +3,9 @@
 
 */
 
+// Global libaries
+import sha256 from 'sha256'
+
 class BlockchainAdapter {
   constructor () {
     this.chain = []
@@ -10,13 +13,18 @@ class BlockchainAdapter {
 
     // Bind 'this' object to all methods
     this.createNewBlock = this.createNewBlock.bind(this)
+    this.getLastBlock = this.getLastBlock.bind(this)
+    this.getLastBlockHash = this.getLastBlockHash.bind(this)
+    this.createNewTransaction = this.createNewTransaction.bind(this)
+    this.hashBlock = this.hashBlock.bind(this)
   }
 
   createNewBlock (inObj = {}) {
     const { nonce, previousBlockHash, hash } = inObj
 
+    // Assemble a new block
     const newBlock = {
-      index: this.chain.length + 1,
+      height: this.chain.length + 1,
       timestamp: new Date().toISOString(),
       transactions: this.newTransactions,
       nonce,
@@ -24,9 +32,50 @@ class BlockchainAdapter {
       previousBlockHash
     }
 
+    // Clear the new transactions array
     this.newTransactions = []
 
+    // Add the new block to the chain
+    this.chain.push(newBlock)
+
+    // Return the new block
     return newBlock
+  }
+
+  getLastBlock () {
+    return this.chain[this.chain.length - 1]
+  }
+
+  getLastBlockHash () {
+    return this.getLastBlock().hash
+  }
+
+  createNewTransaction (inObj = {}) {
+    const { amount, sender, recipient } = inObj
+
+    const newTransaction = {
+      amount,
+      sender,
+      recipient
+    }
+
+    this.newTransactions.push(newTransaction)
+
+    // Get the block height of the future block where this transaction should be included.
+    return this.getLastBlock().height + 1
+  }
+
+  hashBlock (inObj = {}) {
+    const { previousBlockHash, currentBlockData, nonce } = inObj
+
+    // Convert all the data into a single string.
+    const dataAsString = previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData)
+
+    // Hash the block data
+    const hash = sha256(dataAsString)
+
+    // Return the hash
+    return hash
   }
 }
 
