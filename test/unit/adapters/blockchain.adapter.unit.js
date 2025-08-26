@@ -147,4 +147,38 @@ describe('BlockchainAdapter', () => {
       assert.equal(result, '23f3474053053e37ce9617359550419c326d35cbf890fba70adad658ec292cbd')
     })
   })
+
+  describe('#proofOfWork', () => {
+    it('should return the nonce that satisfies the proof of work', () => {
+      // Create genesis block with one transaction.
+      uut.mempool.push('test')
+      uut.createNewBlock({
+        nonce: 1,
+        previousBlockHash: 'fffaaa',
+        hash: 'fffaaa'
+      })
+
+      // Create a new transaction.
+      uut.createNewTransaction({
+        amount: 1,
+        sender: 'test',
+        recipient: 'test'
+      })
+
+      // Create a new block.
+      const newBlock = uut.createNewBlock({
+        nonce: 1,
+        previousBlockHash: 'fffaaa',
+        hash: 'fffaaa'
+      })
+
+      // Create a new block with the new transaction.
+      const result = uut.proofOfWork({
+        previousBlockHash: newBlock.hash,
+        currentBlockData: newBlock.transactions
+      })
+
+      assert.isNumber(result)
+    })
+  })
 })

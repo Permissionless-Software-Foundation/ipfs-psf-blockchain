@@ -53,6 +53,9 @@ class BlockchainAdapter {
     return this.getLastBlock().hash
   }
 
+  // Create a new transaction and add it to the mempool.
+  // Return the expected block height of the blockwhere the transaction will
+  // be included.
   createNewTransaction (inObj = {}) {
     const { amount, sender, recipient } = inObj
 
@@ -79,6 +82,17 @@ class BlockchainAdapter {
 
     // Return the hash
     return hash
+  }
+
+  proofOfWork (inObj = {}) {
+    const { previousBlockHash, currentBlockData } = inObj
+    let nonce = 0
+    let hash = this.hashBlock({ previousBlockHash, currentBlockData, nonce })
+    while (hash.substring(0, 4) !== '0000') {
+      nonce++
+      hash = this.hashBlock({ previousBlockHash, currentBlockData, nonce })
+    }
+    return nonce
   }
 }
 
