@@ -1,5 +1,6 @@
 /*
   This is the adapter for the blockchain.
+  
 */
 
 class BlockchainAdapter {
