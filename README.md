@@ -1,12 +1,12 @@
-# ipfs-service-provider-leveldb
+# ipfs-psf-blockchain
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 ## Overview
 
-This is a 'boilerplate' repository. It's intended to be forked to start new projects. This is a fork of the [ipfs-service-provider](https://github.com/Permissionless-Software-Foundation/ipfs-service-provider) boilerplate. The main change is to swap out MongoDB with LevelDB.
+This is a 'toy' or prototype blockchain. The blockchain code is based on the book [Learn Blockchain Programming with JavaScript](https://amzn.to/4mYHMN4). 
 
-MongoDB is an external service dependency, whereas LevelDB is just npm packages and data on disk. Using LevelDB makes it much easier to prototype new ideas. Prototypes for new ideas can be built that require a database, even before the final database has been decided. That's the main advantage to using LevelDB for the boilerplate.
+The peer-to-peer network part of the blockchain is based on [IPFS](https://ipfs.tech/) (aka [libp2p](https://libp2p.io/)). This code repository was started as a fork of the [ipfs-service-provider-leveldb](https://github.com/christroutner/ipfs-service-provider-leveldb) boilerplate.
 
 
 ## Requirements

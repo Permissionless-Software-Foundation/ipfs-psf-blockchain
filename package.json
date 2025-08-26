@@ -1,7 +1,7 @@
 {
-  "name": "ipfs-service-provider-leveldb",
+  "name": "ipfs-psf-blockchain",
   "version": "5.0.0",
-  "description": "A Koa-based combination of a REST API and IPFS JSON RPC. Boilerplate for starting new projects.",
+  "description": "A prototype blockchain for the PSF community.",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -20,10 +20,10 @@
   "author": "Chris Troutner <chris.troutner@gmail.com>",
   "license": "MIT",
   "apidoc": {
-    "title": "ipfs-service-provider-leveldb",
+    "title": "ipfs-psf-blockchain",
     "url": "localhost:5000"
   },
-  "repository": "christroutner/ipfs-service-provider-leveldb",
+  "repository": "Permissionless-Software-Foundation/ipfs-psf-blockchain",
   "dependencies": {
     "@chainsafe/libp2p-gossipsub": "14.1.0",
     "@chainsafe/libp2p-noise": "16.0.1",
