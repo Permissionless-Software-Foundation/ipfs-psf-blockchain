@@ -106,8 +106,7 @@ class TimerControllers {
   // Periodically check for other nodes on the network.
   async checkForNewPeers () {
     try {
-      const peers = await this.adapters.ipfs.getPeers(true)
-      console.log('peers: ', JSON.stringify(peers, null, 2))
+      await this.useCases.peers.checkForNewPeers()
     } catch (err) {
       console.error('Error in time-controller.js/checkForNewPeers(): ', err)
     }

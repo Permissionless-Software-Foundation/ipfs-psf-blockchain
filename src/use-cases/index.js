@@ -6,6 +6,7 @@
 
 // Local libraries
 import UserUseCases from './user.js'
+import PeersUseCases from './peers-use-cases.js'
 // import { UsageUseCases } from './usage-use-cases.js'
 
 class UseCases {
@@ -19,6 +20,7 @@ class UseCases {
 
     // console.log('use-cases/index.js localConfig: ', localConfig)
     this.user = new UserUseCases(localConfig)
+    this.peers = new PeersUseCases(localConfig)
     // this.usage = new UsageUseCases(localConfig)
   }
 
