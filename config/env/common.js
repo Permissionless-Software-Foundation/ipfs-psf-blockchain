@@ -23,7 +23,7 @@ const version = pkgInfo.version
 
 const ipfsCoordName = process.env.COORD_NAME
   ? process.env.COORD_NAME
-  : 'ipfs-bch-wallet-service'
+  : 'ipfs-psf-blockchain'
 
 export default {
   // Configure TCP port.
@@ -116,14 +116,14 @@ export default {
     '@type': 'WebAPI',
     name: ipfsCoordName,
     version,
-    protocol: 'generic-service',
+    protocol: 'psf-blockchain',
     description:
-      'This is a generic IPFS Serivice Provider that uses JSON RPC over IPFS to communicate with it. This instance has not been customized. Source code: https://github.com/Permissionless-Software-Foundation/ipfs-service-provider',
-    documentation: 'https://ipfs-service-provider.fullstack.cash/',
+      'This is a simple blockchain for the PSF community.',
+    documentation: 'https://github.com/Permissionless-Software-Foundation/ipfs-psf-blockchain',
     provider: {
       '@type': 'Organization',
       name: 'Permissionless Software Foundation',
-      url: 'https://PSFoundation.cash'
+      url: 'https://PSFoundation.info'
     },
 
     // If this node has an IP4 address or domain name used to provide a REST API.

@@ -1,6 +1,6 @@
 {
   "name": "ipfs-psf-blockchain",
-  "version": "5.0.0",
+  "version": "1.0.0",
   "description": "A prototype blockchain for the PSF community.",
   "main": "index.js",
   "type": "module",

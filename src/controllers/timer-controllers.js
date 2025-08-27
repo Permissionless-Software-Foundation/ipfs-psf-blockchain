@@ -26,6 +26,7 @@ class TimerControllers {
     // Constants
     this.cleanUsageInterval = 60000 * 60 // 1 hour
     this.backupUsageInterval = 60000 * 10 // 10 minutes
+    this.checkForNewPeersInterval = 60000 * 1 * 0.25 // 15 seconds
 
     // Encapsulate dependencies
     this.config = config
@@ -33,6 +34,7 @@ class TimerControllers {
     // Bind 'this' object to all subfunctions.
     this.cleanUsage = this.cleanUsage.bind(this)
     this.backupUsage = this.backupUsage.bind(this)
+    this.checkForNewPeers = this.checkForNewPeers.bind(this)
   }
 
   // Start all the time-based controllers.
@@ -41,6 +43,7 @@ class TimerControllers {
     // when the server starts.
     this.cleanUsageHandle = setInterval(this.cleanUsage, this.cleanUsageInterval)
     this.backupUsageHandle = setInterval(this.backupUsage, this.backupUsageInterval)
+    this.checkForNewPeersHandle = setInterval(this.checkForNewPeers, this.checkForNewPeersInterval)
 
     return true
   }
@@ -48,6 +51,7 @@ class TimerControllers {
   stopTimers () {
     clearInterval(this.cleanUsageHandle)
     clearInterval(this.backupUsageHandle)
+    clearInterval(this.checkForNewPeersHandle)
   }
 
   // Clean the usage state so that stats reflect the last 24 hours.
@@ -96,6 +100,16 @@ class TimerControllers {
 
       // Note: Do not throw an error. This is a top-level function.
       return false
+    }
+  }
+
+  // Periodically check for other nodes on the network.
+  async checkForNewPeers () {
+    try {
+      const peers = await this.adapters.ipfs.getPeers(true)
+      console.log('peers: ', JSON.stringify(peers, null, 2))
+    } catch (err) {
+      console.error('Error in time-controller.js/checkForNewPeers(): ', err)
     }
   }
 }

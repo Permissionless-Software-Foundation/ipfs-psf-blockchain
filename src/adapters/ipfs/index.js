@@ -4,7 +4,6 @@
 
 // Local libraries
 import IpfsAdapter from './ipfs.js'
-
 import IpfsCoordAdapter from './ipfs-coord.js'
 import config from '../../../config/index.js'
 
