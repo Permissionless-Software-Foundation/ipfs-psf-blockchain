@@ -19,6 +19,7 @@ import FullStackJWT from './fullstack-jwt.js'
 import config from '../../config/index.js'
 import Wallet from './wallet.adapter.js'
 import LevelDb from './leveldb/index.js'
+import Blockchain from './blockchain.js'
 
 class Adapters {
   constructor (localConfig = {}) {
@@ -33,6 +34,7 @@ class Adapters {
     this.config = config
     this.wallet = new Wallet(localConfig)
     this.levelDb = new LevelDb()
+    this.blockchain = new Blockchain()
 
     // Get a valid JWT API key and instance bch-js.
     this.fullStackJwt = new FullStackJWT(config)

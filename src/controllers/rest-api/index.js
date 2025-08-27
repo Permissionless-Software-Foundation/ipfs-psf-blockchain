@@ -14,6 +14,7 @@ import LogsRESTController from './logs/index.js'
 // import IpfsRESTController from './ipfs/index.js'
 import config from '../../../config/index.js'
 // import UsageRESTController from './usage/index.js'
+import BlockchainRouter from './blockchain/index.js'
 
 class RESTControllers {
   constructor (localConfig = {}) {
@@ -69,6 +70,10 @@ class RESTControllers {
     // // Attach the REST API Controllers associated with the /usage route
     // const usageRESTController = new UsageRESTController(dependencies)
     // usageRESTController.attach(app)
+
+    // Attach the REST API Controllers associated with the /blockchain route
+    const blockchainRouter = new BlockchainRouter(dependencies)
+    blockchainRouter.attach(app)
   }
 }
 
