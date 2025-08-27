@@ -15,6 +15,7 @@ import LogsRESTController from './logs/index.js'
 import config from '../../../config/index.js'
 // import UsageRESTController from './usage/index.js'
 import BlockchainRouter from './blockchain/index.js'
+import TransactionRouter from './transaction/index.js'
 
 class RESTControllers {
   constructor (localConfig = {}) {
@@ -74,6 +75,10 @@ class RESTControllers {
     // Attach the REST API Controllers associated with the /blockchain route
     const blockchainRouter = new BlockchainRouter(dependencies)
     blockchainRouter.attach(app)
+
+    // Attach the REST API Controllers associated with the /transaction route
+    const transactionRouter = new TransactionRouter(dependencies)
+    transactionRouter.attach(app)
   }
 }
 

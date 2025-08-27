@@ -81,10 +81,10 @@ class TimerControllers {
       console.log('backupUsage() Timer Controller executing at ', new Date().toLocaleString())
 
       // Clear the database of old usage data.
-      await this.useCases.usage.clearUsage()
+      // await this.useCases.usage.clearUsage()
 
       // Save the current usage snapshot to the database.
-      await this.useCases.usage.saveUsage()
+      // await this.useCases.usage.saveUsage()
 
       this.backupUsageHandle = setInterval(this.backupUsage, this.backupUsageInterval)
 
