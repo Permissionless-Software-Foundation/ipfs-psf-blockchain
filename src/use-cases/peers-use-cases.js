@@ -46,6 +46,16 @@ class PeersUseCases {
       console.error('Error in peers-use-cases.js/checkForNewPeers(): ', err)
     }
   }
+
+  async syndicateTxToPeers (txObj = {}) {
+    try {
+      // for (let i = 0; i < this.knownPeers.length; i++) {
+      //   const peer = this.knownPeers[i]
+      // }
+    } catch (err) {
+      console.error('Error in peers-use-cases.js/syndicateTxToPeers(): ', err)
+    }
+  }
 }
 
 export default PeersUseCases

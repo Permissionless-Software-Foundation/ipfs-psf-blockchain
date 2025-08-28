@@ -19,6 +19,7 @@ class BlockchainAdapter {
     this.getLastBlock = this.getLastBlock.bind(this)
     this.getLastBlockHash = this.getLastBlockHash.bind(this)
     this.createNewTransaction = this.createNewTransaction.bind(this)
+    this.addTransactionToMempool = this.addTransactionToMempool.bind(this)
     this.hashBlock = this.hashBlock.bind(this)
     this.createGenesisBlock = this.createGenesisBlock.bind(this)
 
@@ -70,10 +71,22 @@ class BlockchainAdapter {
       message
     }
 
-    this.mempool.push(newTransaction)
+    // Calculate a transaction ID by create a sha256 hash of the transaction
+    // object. Add it to the transaction object.
+    const txAsString = JSON.stringify(newTransaction)
+    const txHash = sha256(txAsString)
+    newTransaction.transactionId = txHash
 
-    // Get the block height of the future block where this transaction should be included.
-    return this.getLastBlock().height + 1
+    return newTransaction
+  }
+
+  addTransactionToMempool (transactionObj = {}) {
+    // Check if the transaction is already in the mempool.
+    if (this.mempool.find(tx => tx.transactionId === transactionObj.transactionId)) {
+      return false
+    }
+
+    this.mempool.push(transactionObj)
   }
 
   hashBlock (inObj = {}) {
