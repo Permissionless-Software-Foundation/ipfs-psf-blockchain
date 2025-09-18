@@ -47,11 +47,20 @@ class PeersUseCases {
     }
   }
 
+  // Send the TX to all known blockchain peers.
   async syndicateTxToPeers (txObj = {}) {
     try {
-      // for (let i = 0; i < this.knownPeers.length; i++) {
-      //   const peer = this.knownPeers[i]
-      // }
+      if (this.knownPeers.length === 0) {
+        console.log('No known blockchain peers to syndicate transaction to.')
+        return
+      }
+
+      for (let i = 0; i < this.knownPeers.length; i++) {
+        const peer = this.knownPeers[i]
+
+        await this.adapters.ipfs.peers.sendTxToPeer(peer, txObj)
+        console.log(`Syndicated transaction to peer ${peer}`)
+      }
     } catch (err) {
       console.error('Error in peers-use-cases.js/syndicateTxToPeers(): ', err)
     }

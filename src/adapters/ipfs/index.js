@@ -6,12 +6,14 @@
 import IpfsAdapter from './ipfs.js'
 import IpfsCoordAdapter from './ipfs-coord.js'
 import config from '../../../config/index.js'
+import PeersAdapter from './peers.js'
 
 class IPFS {
   constructor (localConfig = {}) {
     // Encapsulate dependencies
     this.ipfsAdapter = new IpfsAdapter()
     this.IpfsCoordAdapter = IpfsCoordAdapter
+    this.PeersAdapter = PeersAdapter
     this.process = process
     this.config = config
 
@@ -43,6 +45,11 @@ class IPFS {
 
       // Subscribe to the chat pubsub channel
       await this.ipfsCoordAdapter.subscribeToChat()
+
+      // Start peers adapter
+      this.peers = new this.PeersAdapter({
+        ipfs: this.ipfs
+      })
 
       return true
     } catch (err) {

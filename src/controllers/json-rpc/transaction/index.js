@@ -29,7 +29,7 @@ class TransactionRPC {
 
     // Bind 'this' object to all subfunctions.
     this.transactionRouter = this.transactionRouter.bind(this)
-    this.createTransaction = this.createTransaction.bind(this)
+    // this.createTransaction = this.createTransaction.bind(this)
     this.syndicateTxToPeers = this.syndicateTxToPeers.bind(this)
   }
 
